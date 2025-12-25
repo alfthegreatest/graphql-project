@@ -1,6 +1,6 @@
 export const typeDefs = `#graphql
     type Movie {
-        id: ID!
+        id: String!
         title: String!
         filmed: Boolean!
         year: Int!
@@ -9,7 +9,7 @@ export const typeDefs = `#graphql
     }
 
     type Author {
-        id: ID!
+        id: String!
         name: String!
         age: Int!
         movies: [Movie!]!
@@ -17,16 +17,16 @@ export const typeDefs = `#graphql
 
     type Query {
         movies: [Movie!]!
-        authors: [Author!]!
         movie(id: ID!): Movie
+        authors: [Author!]!
         author(id: ID!): Author
         moviesByYear(year: Int!): [Movie!]!
         topRatedMovies(minRating: Float!): [Movie!]!
     }
 
     type Mutation {
-        addMovie(title: String!, filmed: Boolean!, year: Int!, rating: Float, authorId: ID): Movie
-        deleteMovie(id: ID!): Boolean
-        updateMovie(id: ID!, title: String!, filmed: Boolean!, year: Int!, rating: Float, authorId: ID): Movie
+        addMovie(title: String!, filmed: Boolean!, year: Int!, rating: Float, authorId: String): Movie
+        deleteMovie(id: String!): Boolean
+        updateMovie(id: String!, title: String!, filmed: Boolean!, year: Int!, rating: Float, authorId: String): Movie
     }
 `
