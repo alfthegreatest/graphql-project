@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div style={{padding: "20px"}}>
-      {movieLoading && <p>Загрузка деталей...</p>}
+      {movieLoading && <p>Loading...</p>}
       {movieData && (
         <div style={{padding: "15px", backgroundColor: "#3c3f3dff", marginBottom: "20px"}}>
           <h3>Movie details:</h3>
@@ -45,7 +45,6 @@ function App() {
           <p>Author: {movieData.movie.author.name}</p>
         </div>
       )}
-
 
       <h1>List of movies</h1>
       {data.movies.map(movie => (
