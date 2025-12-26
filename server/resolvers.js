@@ -4,7 +4,7 @@ import { AuthorModel } from "./modules/Author.js";
 
 export const resolvers = {
     Query: {
-        movies: async () => {console.log('movies'); return await MovieModel.find();},
+        movies: async () => await MovieModel.find(),
         authors: async () => await AuthorModel.find(),
         movie: async (_, { id }) => await MovieModel.findById(id),
         author: async (_, { id }) => await AuthorModel.findById(id),
