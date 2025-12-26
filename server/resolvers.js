@@ -4,7 +4,7 @@ import { AuthorModel } from "./modules/Author.js";
 
 export const resolvers = {
     Query: {
-        movies: async () => await MovieModel.find(),
+        movies: async () => {console.log('movies'); return await MovieModel.find();},
         authors: async () => await AuthorModel.find(),
         movie: async (_, { id }) => await MovieModel.findById(id),
         author: async (_, { id }) => await AuthorModel.findById(id),
@@ -18,7 +18,7 @@ export const resolvers = {
         movies: async (parent) => await MovieModel.find({ authorId: parent.id})
     },
     Mutation: {
-        addMovie: async (_, { title, filmed, year, rating, authorId}) => {
+        addMovie: async (_, { title, filmed, year, rating, authorId }) => {
             const newMovie = new MovieModel({
                 title, filmed, year, rating, authorId
             });
