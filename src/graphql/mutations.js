@@ -21,3 +21,9 @@ export const ADD_MOVIE = gql`
     }
   }
 `;
+
+export const DELETE_MOVIE = gql`
+  mutation deleteMovie($id: String!) {
+    deleteMovie(id: $id)
+  }
+`;
