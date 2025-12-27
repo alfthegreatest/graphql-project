@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
 import AddMoviePopup from "./components/AddMoviePopup";
@@ -7,18 +8,35 @@ import { GET_MOVIE, GET_MOVIES } from './graphql/queries';
 function App() {
   const [getMovie, { data: movieData }] = useLazyQuery(GET_MOVIE);
   const { loading, error, data } = useQuery(GET_MOVIES);
-  const handleGetMore = (id) => getMovie({ variables: { id } });
+  const [selectedMovieId, setSelectedMovieId] = useState(movieData);
+
+  const handleGetMore = (id) => {
+    getMovie({ variables: { id } })
+    setSelectedMovieId(id);
+  };
+
+  function handleDelete() {
+    setSelectedMovieId(null);
+  }
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>
 
+  
   return (
     <div className="app">
       <div>
         <AddMoviePopup />
-        <MovieList movies={data.movies} onGetMore={handleGetMore} />
+        <MovieList
+          movies={data.movies} 
+          onGetMore={handleGetMore} 
+          onDeleteMovie={handleDelete}  
+        />
       </div>
-      <MovieDetails movie={ movieData?.movie } />
+
+      {selectedMovieId && movieData?.movie && (
+        <MovieDetails movie={ movieData?.movie } />
+      )}
     </div>
   )
 }
