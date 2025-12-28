@@ -32,6 +32,13 @@ export const resolvers = {
         updateMovie: async (_, { id, ...args }) => {
             const movie = await MovieModel.findByIdAndUpdate(id, args, {new: true});
             return movie;
+        },
+        addAuthor: async (_, { name, age }) => {
+            const newAuthor = new AuthorModel({
+                name, age
+            });
+            await newAuthor.save();
+            return newAuthor;
         }
     }
 }

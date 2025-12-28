@@ -27,3 +27,19 @@ export const DELETE_MOVIE = gql`
     deleteMovie(id: $id)
   }
 `;
+
+export const ADD_AUTHOR = gql`
+  mutation addAuthor(
+    $name: String!,
+    $age: Int!
+  ) {
+    addAuthor(
+      name: $name,
+      age: $age
+    ) {
+      id
+      name
+      age        
+    }
+  }
+`;

@@ -7,7 +7,7 @@ function DialogPopup({ header, content, onCloseClick }) {
                         className="popup-close" 
                         href="#"
                         onClick={() => {onCloseClick()}}
-                    >close</a>
+                    ></a>
                     <h3>{ header }</h3>
                     <div className='popup-content'>{ content }</div>
                 </div>
