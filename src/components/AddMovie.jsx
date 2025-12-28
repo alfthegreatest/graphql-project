@@ -104,7 +104,7 @@ function AddMovie() {
                         <div className="form-buttons">
                             <input 
                                 type="button" 
-                                value="cancel1"
+                                value="cancel"
                                 className="btn btn-cancel"
                                 onClick={handleCancel}
                             />
