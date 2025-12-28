@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -133,6 +136,10 @@ h1 {
 }
 
 /* popup */
+.popup-black {
+  position: absolute;
+}
+
 .popup-black:before {
     content: '';
     background: #000;
@@ -161,13 +168,44 @@ h1 {
 }
 
 .popup-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.popup-close::before,
+.popup-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 2px;
+  background-color: #666;
+}
+
+.popup-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.popup-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.popup-close:hover {
+  background-color: #e0e0e0;
 }
 
 .form-buttons {
-  margin-top: 3vh;
+  margin-top: 5vh;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .btn {
@@ -184,10 +222,35 @@ h1 {
 
 .btn-cancel {
   background-color: #f44336;
-  margin-left: 10px;
 }
 
 .btn-gray {
   background-color: #a0a0a0;
   margin-left: 10px;
+}
+
+.ml-5 {
+  margin-left: 5px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+form > div {
+  width: 100%;
+}
+
+input[type=text],
+input[type=number],
+select {
+  padding: 10px 5px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #888888;
 }

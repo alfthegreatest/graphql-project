@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
-import AddMoviePopup from "./components/AddMoviePopup";
+import AddMovie from "./components/AddMovie";
+import AddAuthor from "./components/AddAuthor";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_MOVIE, GET_MOVIES } from './graphql/queries';
 
@@ -22,11 +23,11 @@ function App() {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>
 
-  
   return (
     <div className="app">
       <div>
-        <AddMoviePopup />
+        <AddMovie />
+        <AddAuthor className="ml-10" />
         <MovieList
           movies={data.movies} 
           onGetMore={handleGetMore} 

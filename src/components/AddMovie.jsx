@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_AUTHORS, GET_MOVIES } from '../graphql/queries';
 import { ADD_MOVIE } from "../graphql/mutations";
+import DialogPopup from './interface/DialogPopup';
 
-function AddMoviePopup() {
+
+function AddMovie() {
     const currentYear = new Date().getFullYear();
     const [title, setTitle] = useState('');
     const [year, setYear] = useState(currentYear);
@@ -20,6 +22,10 @@ function AddMoviePopup() {
         setTitle('');
         setYear(currentYear);
         setAuthorId(0);
+    }
+
+    function handleOnCloseClick() {
+        setShowModal(false);
     }
     
     const handleSubmit = async (e) => {
@@ -45,22 +51,22 @@ function AddMoviePopup() {
         }
     };
 
+    function handleCancel() {
+        resetFormData(); 
+        setShowModal(false)
+    }
+
    
     return(
         <>
             <button onClick={() => {setShowModal(true)}}>Add movie</button>
             {showModal && (
-            <div className="popup-black" onClick={() => setShowModal(false)}>
-                <div className="popup" onClick={(e) => e.stopPropagation()}>
-                    <a 
-                        className="popup-close" 
-                        href="#"
-                        onClick={() => {setShowModal(false)}}
-                    >close</a>
-                    <h3>Add a new movie</h3>
+                <DialogPopup
+                    header={`Add author`}
+                    content={
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="movie-title">Title </label>
+                            <label htmlFor="movie-title">Title</label>
                             <input 
                                 id="movie-title" 
                                 type="text"
@@ -69,7 +75,7 @@ function AddMoviePopup() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="movie-year">Year </label>
+                            <label htmlFor="movie-year">Year</label>
                             <input
                                 id="movie-year"
                                 type="number" 
@@ -81,7 +87,7 @@ function AddMoviePopup() {
                             />    
                         </div>
                         <div>
-                            <label htmlFor="movie-author">Author </label>
+                            <label htmlFor="movie-author">Author</label>
                             <select id="movie-author" onChange={(e) => setAuthorId(e.target.value)}>
                                 <option value="0">not chosen</option> 
                                 {authorsLoading 
@@ -95,30 +101,27 @@ function AddMoviePopup() {
                                 )} 
                             </select>
                         </div>
-
                         <div className="form-buttons">
+                            <input 
+                                type="button" 
+                                value="cancel1"
+                                className="btn btn-cancel"
+                                onClick={handleCancel}
+                            />
                             <input
                                 type="submit" 
                                 value="add movie"
-                                className="btn btn-primary"
+                                className="btn btn-primary ml-5"
                                 disabled={loading}
                             />
-
-                            <input 
-                                type="button" 
-                                value="cancel"
-                                className="btn btn-cancel"
-                                onClick={() => {resetFormData(); setShowModal(false)}}
-                            />
-
                             {error && <p style={{color: 'red'}}>Error: {error.message}</p>}
                         </div>
-                    </form>
-                </div>
-            </div>
-            )}
+                    </form>}
+                    onCloseClick={handleOnCloseClick}
+                />)
+            }
         </>
     )
 }
 
-export default AddMoviePopup;
+export default AddMovie;
