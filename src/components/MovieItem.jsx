@@ -1,4 +1,10 @@
-function MovieItem({ movie, onGetMore, onDeleteClick }) {
+import { useMovieUIStore } from '../stores/movieUI.store';
+
+
+function MovieItem({ movie }) {
+  const setMovieToDelete = useMovieUIStore(s => s.setMovieToDelete);
+  const setSelectedMovieId = useMovieUIStore(s => s.setSelectedMovieId);
+
   if(!movie) return null;
 
   
@@ -10,7 +16,7 @@ function MovieItem({ movie, onGetMore, onDeleteClick }) {
           className="delete-cross"
           onClick={(e) => { 
             e.preventDefault();
-            onDeleteClick(movie);
+            setMovieToDelete(movie);
           }}
         >[x]</a>
 
@@ -20,7 +26,7 @@ function MovieItem({ movie, onGetMore, onDeleteClick }) {
           className="more-link"
           onClick={(e) => { 
             e.preventDefault();
-            onGetMore(movie.id);
+            setSelectedMovieId(movie.id);
           }}
         >[more]</a>
       </h2>
