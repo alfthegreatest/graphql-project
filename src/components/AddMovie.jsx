@@ -62,7 +62,7 @@ function AddMovie() {
             <button onClick={() => {setShowModal(true)}}>Add movie</button>
             {showModal && (
                 <DialogPopup
-                    header={`Add author`}
+                    header={`Add movie`}
                     content={
                     <form onSubmit={handleSubmit}>
                         <div>
