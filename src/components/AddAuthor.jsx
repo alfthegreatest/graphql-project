@@ -5,12 +5,11 @@ import { ADD_AUTHOR } from '../graphql/mutations';
 import { GET_AUTHORS } from '../graphql/queries';
 
 
-function AddAuthor({ className = '' }) {
+function AddAuthor() {
     const [showModal, setShowModal] = useState(false);
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     
-
     const [addAuthor, { loading, error }] = useMutation(ADD_AUTHOR, {
         refetchQueries: [{ query: GET_AUTHORS }]
     });
@@ -51,7 +50,7 @@ function AddAuthor({ className = '' }) {
 
     return (
         <>
-            <button className={className} onClick={() => {setShowModal(true)}}>Add author</button>
+            <button onClick={() => {setShowModal(true)}}>Add author</button>
             {showModal && (
                 <DialogPopup
                     header={`Add author`}

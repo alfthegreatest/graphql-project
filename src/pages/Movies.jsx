@@ -22,7 +22,7 @@ export default function Movies() {
 
     return(
         <div id="movies">
-            <AddMovie />
+            <AddMovie className="ml-10"/>
 
             <MovieList
                 movies={data.movies} 

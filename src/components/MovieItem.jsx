@@ -1,7 +1,7 @@
 import { useMovieUIStore } from '../stores/movieUI.store';
 
 
-function MovieItem({ movie }) {
+export default function MovieItem({ movie }) {
   const setMovieToDelete = useMovieUIStore(s => s.setMovieToDelete);
   const setSelectedMovieId = useMovieUIStore(s => s.setSelectedMovieId);
 
@@ -33,5 +33,3 @@ function MovieItem({ movie }) {
     </div>
   )
 }
-
-export default MovieItem;

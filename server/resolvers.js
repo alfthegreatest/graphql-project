@@ -39,6 +39,10 @@ export const resolvers = {
             });
             await newAuthor.save();
             return newAuthor;
-        }
+        },
+        deleteAuthor: async (_, { id }) => {
+            const result = await AuthorModel.findByIdAndDelete(id);
+            return !!result;
+        },
     }
 }

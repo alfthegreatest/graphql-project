@@ -29,5 +29,6 @@ export const typeDefs = `#graphql
         deleteMovie(id: String!): Boolean
         updateMovie(id: String!, title: String!, filmed: Boolean!, year: Int!, rating: Float, authorId: String): Movie
         addAuthor(name: String!, age: Int!): Author
+        deleteAuthor(id: String!): Boolean
     }
 `

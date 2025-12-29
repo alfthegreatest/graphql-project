@@ -43,10 +43,12 @@ body {
   min-width: 320px;
 }
 
+#authors,
 #movies {
   display: flex;
   gap: 10px;  
 }
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -90,32 +92,37 @@ h1 {
   margin: 0;
 }
 
+.author-details,
 .movie-details {
   padding: 15px;
   background: #3c3f3dff;
   margin-bottom: 20px;
   border-radius: 5px;
-
-  
 }
 
+.author-details h3,
 .movie-details h3 {
   margin-top: 0;
 }
 
+.author-details p,
 .movie-details p {
   margin: 0 5px 0 10px;
 }
 
+
+.author-details span.key,
 .movie-details span.key {
   font-weight: bold;
 }
 
+.author-item,
 .movie-item {
   margin-bottom: 15px;
   border-bottom: 1px solid #ccc;
 }
 
+.author-item h2,
 .movie-item > h2 {
   margin-bottom: 5px;
 }

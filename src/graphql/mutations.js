@@ -43,3 +43,9 @@ export const ADD_AUTHOR = gql`
     }
   }
 `;
+
+export const DELETE_AUTHOR = gql`
+  mutation deleteAuthor($id: String!) {
+    deleteMovie(id: $id)
+  }
+`
