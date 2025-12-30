@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { useMovieUIStore } from '../stores/movieUI.store';
-import { GET_AUTHORS } from '../graphql/queries';
 import { DELETE_AUTHOR } from "../graphql/mutations";
+import { GET_AUTHORS } from "../graphql/queries";
 import AuthorItem from './AuthorItem';
 import DialogPopup from './interface/DialogPopup';
 
