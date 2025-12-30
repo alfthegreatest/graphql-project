@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import DialogPopup from './interface/DialogPopup';
-import { ADD_AUTHOR } from '../graphql/mutations';
-import { GET_AUTHORS } from '../graphql/queries';
+import DialogPopup from '../interface/DialogPopup';
+import { ADD_AUTHOR } from '../../graphql/mutations';
+import { GET_AUTHORS } from '../../graphql/queries';
 
 
 function AddAuthor() {

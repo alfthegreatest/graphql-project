@@ -1,9 +1,9 @@
 import MovieItem from "./MovieItem";
-import DialogPopup from "./interface/DialogPopup";
+import DialogPopup from "../interface/DialogPopup";
 import { useMutation } from "@apollo/client";
-import { GET_MOVIES } from '../graphql/queries';
-import { DELETE_MOVIE } from "../graphql/mutations";
-import { useMovieUIStore } from "../stores/movieUI.store";
+import { GET_MOVIES } from '../../graphql/queries';
+import { DELETE_MOVIE } from "../../graphql/mutations";
+import { useMovieUIStore } from "../../stores/movieUI.store";
 
 
 function MovieList({ movies }) {

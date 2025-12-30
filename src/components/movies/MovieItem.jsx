@@ -1,4 +1,4 @@
-import { useMovieUIStore } from '../stores/movieUI.store';
+import { useMovieUIStore } from '../../stores/movieUI.store';
 
 
 export default function MovieItem({ movie }) {
