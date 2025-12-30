@@ -26,7 +26,7 @@ export default function AuthorList({ authors }) {
 
     return(
         <div>
-            <h1>List of authors</h1>
+            <h1>Authors</h1>
             {authors.map(author => (
                 <AuthorItem 
                     author={author} 

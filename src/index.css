@@ -110,7 +110,6 @@ h1 {
   margin: 0 5px 0 10px;
 }
 
-
 .author-details span.key,
 .movie-details span.key {
   font-weight: bold;
@@ -127,8 +126,16 @@ h1 {
   margin-bottom: 5px;
 }
 
-.movie-item > p {
+.author-movies {
+  margin: 10px 0 5px 10px;
+}
+
+.author-movies > ul {
   margin: 0;
+}
+
+.movie-item > p {
+  margin: 10px 0 0;
 }
 
 .more-link {

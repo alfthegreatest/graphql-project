@@ -40,6 +40,11 @@ export const GET_AUTHOR = gql`
         id
         name
         age
+        movies {
+          id
+          title
+          year
+        }
       }
     }
 `;
