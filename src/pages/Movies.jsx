@@ -1,7 +1,7 @@
 import { useMovieUIStore } from '../stores/movieUI.store';
-import MovieList from "../components/MovieList";
-import MovieDetails from "../components/MovieDetails";
-import AddMovie from "../components/AddMovie";
+import MovieList from "../components/movies/MovieList";
+import MovieDetails from "../components/movies/MovieDetails";
+import AddMovie from "../components/movies/AddMovie";
 
 import { useQuery } from "@apollo/client";
 import { GET_MOVIE, GET_MOVIES } from '../graphql/queries';

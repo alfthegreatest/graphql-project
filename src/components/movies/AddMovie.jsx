@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_AUTHORS, GET_MOVIES } from '../graphql/queries';
-import { ADD_MOVIE } from "../graphql/mutations";
-import DialogPopup from './interface/DialogPopup';
+import { GET_AUTHORS, GET_MOVIES } from '../../graphql/queries';
+import { ADD_MOVIE } from "../../graphql/mutations";
+import DialogPopup from '../interface/DialogPopup';
 
 
 function AddMovie() {

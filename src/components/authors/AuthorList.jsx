@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import { useMovieUIStore } from '../stores/movieUI.store';
-import { DELETE_AUTHOR } from "../graphql/mutations";
-import { GET_AUTHOR, GET_AUTHORS } from "../graphql/queries";
+import { useMovieUIStore } from '../../stores/movieUI.store';
+import { DELETE_AUTHOR } from "../../graphql/mutations";
+import { GET_AUTHOR, GET_AUTHORS } from "../../graphql/queries";
 import AuthorItem from './AuthorItem';
-import DialogPopup from './interface/DialogPopup';
+import DialogPopup from '../interface/DialogPopup';
 
 
 export default function AuthorList({ authors }) {
