@@ -277,3 +277,9 @@ label {
   font-weight: bold;
   color: #888888;
 }
+
+.field-error {
+  color: red;
+  margin: 0;
+  font-size: small;
+}

@@ -1,18 +1,23 @@
-import { useMutation } from '@apollo/client';
 import { ADD_AUTHOR } from '../../graphql/mutations';
 import { GET_AUTHORS } from '../../graphql/queries';
+import { useMutation } from '@apollo/client';
+import { useAuthorUIStore } from '../../stores/authorUI.store';
 
+// validation
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-  name: z.string().min(1, 'Name is required'),
+  name: z.string()
+    .min(1, 'Name is required')
+    .max(20, 'Name has to be shorter than 20 symbols'),
   age: z.coerce.number().int().min(1, 'Age must be > 0'),
 });
 
 
 export default function AddAuthorForm() {
+    const hideAddAuthorForm = useAuthorUIStore(s => s.hideAddAuthorForm);
     const [addAuthor, { loading, error }] = useMutation(ADD_AUTHOR, {
         refetchQueries: [{ query: GET_AUTHORS }]
     });
@@ -25,15 +30,17 @@ export default function AddAuthorForm() {
     } = useForm({ resolver: zodResolver(schema) });
 
     const onSubmit = async (data) => {
-     try {
-        await addAuthor({ variables: data });
-        reset();
-    } catch (err) {
+        try {
+            await addAuthor({ variables: data });
+            hideAddAuthorForm();
+            reset();
+        } catch (err) {
             console.error('Error adding author:', err);
         }
     }
 
-    function handleCancel() {
+    function cancelHandle() {
+        hideAddAuthorForm();
         reset();
     }
 
@@ -43,19 +50,19 @@ export default function AddAuthorForm() {
             <div>
                 <label htmlFor="author-name">Name (required)</label>
                 <input type="text" {...register('name')} />
-                {errors.name && <p>{errors.name.message}</p>}
+                {errors.name && <p className="field-error">{errors.name.message}</p>}
             </div>
             <div>
                 <label htmlFor="author-age">Age (required)</label>
                 <input type="number" {...register('age')} />
-                {errors.age && <p>{errors.age.message}</p>}
+                {errors.age && <p className="field-error">{errors.age.message}</p>}
             </div>
             <div className="form-buttons">
                 <input
                     type="button"
                     value="cancel"
                     className="btn btn-cancel"
-                    onClick={handleCancel}
+                    onClick={cancelHandle}
                 />
                 <input
                     type="submit"
@@ -63,7 +70,7 @@ export default function AddAuthorForm() {
                     className="btn btn-primary ml-5"
                     disabled={loading}
                 />
-                {error && <p style={{color: 'red'}}>Error: {error.message}</p>}
+                {error && <p className="error">Error: {error.message}</p>}
             </div>
         </form>
     )
