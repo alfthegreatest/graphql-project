@@ -1,0 +1,70 @@
+import { useMutation } from '@apollo/client';
+import { ADD_AUTHOR } from '../../graphql/mutations';
+import { GET_AUTHORS } from '../../graphql/queries';
+
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  age: z.coerce.number().int().min(1, 'Age must be > 0'),
+});
+
+
+export default function AddAuthorForm() {
+    const [addAuthor, { loading, error }] = useMutation(ADD_AUTHOR, {
+        refetchQueries: [{ query: GET_AUTHORS }]
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({ resolver: zodResolver(schema) });
+
+    const onSubmit = async (data) => {
+     try {
+        await addAuthor({ variables: data });
+        reset();
+    } catch (err) {
+            console.error('Error adding author:', err);
+        }
+    }
+
+    function handleCancel() {
+        reset();
+    }
+
+
+    return(
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+                <label htmlFor="author-name">Name (required)</label>
+                <input type="text" {...register('name')} />
+                {errors.name && <p>{errors.name.message}</p>}
+            </div>
+            <div>
+                <label htmlFor="author-age">Age (required)</label>
+                <input type="number" {...register('age')} />
+                {errors.age && <p>{errors.age.message}</p>}
+            </div>
+            <div className="form-buttons">
+                <input
+                    type="button"
+                    value="cancel"
+                    className="btn btn-cancel"
+                    onClick={handleCancel}
+                />
+                <input
+                    type="submit"
+                    value="add author"
+                    className="btn btn-primary ml-5"
+                    disabled={loading}
+                />
+                {error && <p style={{color: 'red'}}>Error: {error.message}</p>}
+            </div>
+        </form>
+    )
+}

@@ -1,102 +1,24 @@
-import { useState } from 'react';
-import { useMutation } from '@apollo/client';
 import DialogPopup from '../interface/DialogPopup';
-import { ADD_AUTHOR } from '../../graphql/mutations';
-import { GET_AUTHORS } from '../../graphql/queries';
+import AddAuthorForm from './AddAuthorForm';
+import { useAuthorUIStore } from "../../stores/authorUI.store";
 
 
-function AddAuthor() {
-    const [showModal, setShowModal] = useState(false);
-    const [name, setName] = useState('');
-    const [age, setAge] = useState(0);
+export default function AddAuthor() {
+    const addAuthorForm = useAuthorUIStore(s => s.addAuthorForm);
+    const showAddAuthorForm = useAuthorUIStore(s => s.showAddAuthorForm);
+    const hideAddAuthorForm = useAuthorUIStore(s => s.hideAddAuthorForm);
+
     
-    const [addAuthor, { loading, error }] = useMutation(ADD_AUTHOR, {
-        refetchQueries: [{ query: GET_AUTHORS }]
-    });
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const data = {
-                name,
-                age
-            }
-            
-            await addAuthor({ variables: data });
-            
-            setShowModal(false);
-            resetFormData();
-    } catch (err) {
-            console.error('Error adding movie:', err);
-            alert('Error: ' + err.message);
-        }
-    }
-
-    function handleCancel() {
-        setShowModal(false);
-        resetFormData();
-    }
-
-    function handleOnCloseClick() {
-        setShowModal(false);
-    }
-
-    function resetFormData() {
-        setName('');
-        setAge(0);
-    }
-
     return (
         <>
-            <button onClick={() => {setShowModal(true)}}>Add author</button>
-            {showModal && (
+            <button onClick={() => showAddAuthorForm() }>Add author</button>
+            {addAuthorForm && (
                 <DialogPopup
                     header={`Add author`}
-                    content={
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="author-name">Name</label>
-                            <input
-                                id="author-name"
-                                type="text"
-                                name="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="author-age">Age</label>
-                            <input
-                                type="number"
-                                name="age"
-                                min="0"
-                                value={age}
-                                onChange={(e) => setAge(parseInt(e.target.value))}
-                            />
-                        </div>
-                        <div className="form-buttons">
-                            <input
-                                type="button"
-                                value="cancel"
-                                className="btn btn-cancel"
-                                onClick={handleCancel}
-                            />
-                            <input
-                                type="submit"
-                                value="add author"
-                                className="btn btn-primary ml-5"
-                                disabled={loading}
-                            />
-                            {error && <p style={{color: 'red'}}>Error: {error.message}</p>}
-                        </div>
-                    </form>}
-                    onCloseClick={handleOnCloseClick}
+                    content={<AddAuthorForm />}
+                    onCloseClick={() => hideAddAuthorForm()}
                 />
             )}
         </>
     );
 }
-
-export default AddAuthor
