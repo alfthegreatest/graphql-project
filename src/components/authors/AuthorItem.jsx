@@ -1,9 +1,9 @@
-import { useMovieUIStore } from "../../stores/movieUI.store";
+import { useAuthorUIStore } from "../../stores/authorUI.store";
 
 
 export default function AuthorItem({ author }) {
-    const setAuthorToDelete = useMovieUIStore(s => s.setAuthorToDelete);
-    const setSelectedAuthorId = useMovieUIStore(s => s.setSelectedAuthorId);
+    const setAuthorToDelete = useAuthorUIStore(s => s.setAuthorToDelete);
+    const setSelectedAuthorId = useAuthorUIStore(s => s.setSelectedAuthorId);
 
     if(!author) return null;
 

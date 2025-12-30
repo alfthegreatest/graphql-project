@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import { useMovieUIStore } from '../../stores/movieUI.store';
+import { useAuthorUIStore } from '../../stores/authorUI.store';
 import { DELETE_AUTHOR } from "../../graphql/mutations";
 import { GET_AUTHOR, GET_AUTHORS } from "../../graphql/queries";
 import AuthorItem from './AuthorItem';
@@ -7,9 +7,9 @@ import DialogPopup from '../interface/DialogPopup';
 
 
 export default function AuthorList({ authors }) {
-    const authorToDelete = useMovieUIStore(s => s.authorToDelete);
-    const clearAuthorToDelete = useMovieUIStore(s => s.clearAuthorToDelete);
-    const setSelectedAuthorId = useMovieUIStore(s => s.setSelectedAuthorId);
+    const authorToDelete = useAuthorUIStore(s => s.authorToDelete);
+    const clearAuthorToDelete = useAuthorUIStore(s => s.clearAuthorToDelete);
+    const setSelectedAuthorId = useAuthorUIStore(s => s.setSelectedAuthorId);
 
     const [getAuthor, { data: authorData }] = useLazyQuery(GET_AUTHOR);
 
