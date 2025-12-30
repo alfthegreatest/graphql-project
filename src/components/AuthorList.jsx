@@ -1,7 +1,7 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { useMovieUIStore } from '../stores/movieUI.store';
 import { DELETE_AUTHOR } from "../graphql/mutations";
-import { GET_AUTHORS } from "../graphql/queries";
+import { GET_AUTHOR, GET_AUTHORS } from "../graphql/queries";
 import AuthorItem from './AuthorItem';
 import DialogPopup from './interface/DialogPopup';
 
@@ -11,11 +11,23 @@ export default function AuthorList({ authors }) {
     const clearAuthorToDelete = useMovieUIStore(s => s.clearAuthorToDelete);
     const setSelectedAuthorId = useMovieUIStore(s => s.setSelectedAuthorId);
 
+    const [getAuthor, { data: authorData }] = useLazyQuery(GET_AUTHOR);
+
     const [deleteAuthor] = useMutation(DELETE_AUTHOR, {
       refetchQueries: [{ query: GET_AUTHORS }]
     });
 
     async function handleDeleteAuthor() {
+        const { data } = await getAuthor({ 
+            variables: { id: authorToDelete.id } 
+        });
+
+        if (data?.author?.movies?.length > 0) {
+            alert(`Cannot delete author "${authorToDelete.name}". They have ${data.author.movies.length} movie(s).`);
+            clearAuthorToDelete();
+            return;
+        }
+
         await deleteAuthor({ variables: { id: authorToDelete.id } });
         setSelectedAuthorId();
         clearAuthorToDelete()
