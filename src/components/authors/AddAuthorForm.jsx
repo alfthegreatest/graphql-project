@@ -48,12 +48,12 @@ export default function AddAuthorForm() {
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <label htmlFor="author-name">Name (required)</label>
+                <label htmlFor="author-name">Name</label>
                 <input type="text" {...register('name')} />
                 {errors.name && <p className="field-error">{errors.name.message}</p>}
             </div>
             <div>
-                <label htmlFor="author-age">Age (required)</label>
+                <label htmlFor="author-age">Age</label>
                 <input type="number" {...register('age')} />
                 {errors.age && <p className="field-error">{errors.age.message}</p>}
             </div>

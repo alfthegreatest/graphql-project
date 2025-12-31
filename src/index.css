@@ -227,8 +227,7 @@ h1 {
 
 .form-buttons {
   margin-top: 5vh;
-  display: flex;
-  justify-content: flex-end;
+  text-align: right;
 }
 
 .btn {
@@ -278,8 +277,12 @@ label {
   color: #888888;
 }
 
+.error,
 .field-error {
   color: red;
+}
+
+.field-error {
   margin: 0;
   font-size: small;
 }

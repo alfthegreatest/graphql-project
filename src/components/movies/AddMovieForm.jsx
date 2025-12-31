@@ -1,20 +1,23 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_AUTHORS, GET_MOVIES } from '../../graphql/queries';
 import { ADD_MOVIE } from "../../graphql/mutations";
+import { useMovieUIStore } from '../../stores/movieUI.store';
 
 // validation
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+const currYear = new Date().getFullYear();
 const schema = z.object({
   title: z.string().min(1, 'Name is required').max(30, 'Name has to be shorter than 30 symbols'),
-  year: z.coerce.number().min(1901, 'Age must be > 1900').max(new Date().getFullYear()),
+  year: z.coerce.number().min(1901, 'Year must be > 1900').max(currYear, `Year must be <= ${currYear}`),
   authorId: z.string().refine(val => val !== "0", { message: "Please select an author" }),
 });
 
 
 export default function AddMovieForm() {
+    const hideAddMovieForm = useMovieUIStore(s => s.hideAddMovieForm);
     const { loading: authorsLoading, data: authorsData } = useQuery(GET_AUTHORS);
     const [addMovie, { loading, error }] = useMutation(ADD_MOVIE, {
         refetchQueries: [{ query: GET_MOVIES }]
@@ -27,28 +30,21 @@ export default function AddMovieForm() {
         formState: { errors },
     } = useForm({ resolver: zodResolver(schema) });
     
+    const onSubmit = async (data) => {
+        data.filmed = true;
+        data.rating = 0;
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        
         try {
-            const data = {
-                title,
-                filmed: true,
-                year: parseInt(year),
-                rating: 1,
-                authorId: String(authorId)
-            };
-
-
             await addMovie({ variables: data });
+            hideAddMovieForm();
+            reset();
         } catch (err) {
             console.error('Error adding movie:', err);
         }
     };
 
     function handleCancel() {
-        hideAddAuthorForm();
+        hideAddMovieForm();
         reset();
     }
 
@@ -60,6 +56,7 @@ export default function AddMovieForm() {
                 <input type="text" {...register('title')} />
                 {errors.title && <p className="field-error">{errors.title.message}</p>}
             </div>
+
             <div>
                 <label htmlFor="movie-year">Year</label>
                 <input type="number" {...register('year')} />
@@ -98,7 +95,7 @@ export default function AddMovieForm() {
                     className="btn btn-primary ml-5"
                     disabled={loading}
                 />
-                {error && <p className="error">Error: {error.message}</p>}
+                {error && <div className="error">Error: {error.message}</div>}
             </div>
         </form>
     )
