@@ -4,9 +4,11 @@ import { useAuthorUIStore } from '../stores/authorUI.store';
 import AddAuthor from '../components/authors/AddAuthor';
 import AuthorList from '../components/authors/AuthorList';
 import AuthorDetails from '../components/authors/AuthorDetails';
+import useIsMobile from '../hooks/useIsMobile';
 
 
 export default function Authors() {
+    const isMobile = useIsMobile();
     const {loading, error, data } = useQuery(GET_AUTHORS);
     const selectedAuthorId = useAuthorUIStore(s => s.selectedAuthorId);
 
@@ -20,16 +22,24 @@ export default function Authors() {
 
 
     return(
-        <div id="authors">
-            <AddAuthor className="ml-10" />
-
-            <AuthorList
-                authors={data.authors} 
-            />
-
-            {selectedAuthorId && authorDetails && (
-                <AuthorDetails author={ authorDetails?.author } />
+        <>
+            {isMobile && (
+                <AddAuthor />
             )}
-        </div>
+            <div id="authors">
+                {!isMobile && (
+                    <AddAuthor />
+                )}
+
+
+                <AuthorList
+                    authors={data.authors} 
+                />
+
+                {selectedAuthorId && authorDetails && (
+                    <AuthorDetails author={ authorDetails?.author } />
+                )}
+            </div>
+        </>
     );
 }

@@ -1,13 +1,16 @@
-import { useMovieUIStore } from '../stores/movieUI.store';
 import MovieList from "../components/movies/MovieList";
 import MovieDetails from "../components/movies/MovieDetails";
 import AddMovie from "../components/movies/AddMovie";
 
+import { useMovieUIStore } from '../stores/movieUI.store';
 import { useQuery } from "@apollo/client";
 import { GET_MOVIE, GET_MOVIES } from '../graphql/queries';
+import useIsMobile from '../hooks/useIsMobile';
 
 
 export default function Movies() {
+    const isMobile = useIsMobile();
+
     const { loading, error, data } = useQuery(GET_MOVIES);
     const selectedMovieId = useMovieUIStore(s => s.selectedMovieId);
 
@@ -21,16 +24,23 @@ export default function Movies() {
 
 
     return(
-        <div id="movies">
-            <AddMovie className="ml-10"/>
-
-            <MovieList
-                movies={data.movies} 
-            />
-
-            {selectedMovieId && movieDetails && (
-                <MovieDetails movie={ movieDetails?.movie } />
+        <>
+            {isMobile && (
+                <AddMovie />
             )}
-       </div>
+            <div id="movies">
+                {!isMobile && (
+                    <AddMovie />
+                )}
+
+                <MovieList
+                    movies={data.movies} 
+                />
+
+                {selectedMovieId && movieDetails && (
+                    <MovieDetails movie={ movieDetails?.movie } />
+                )}
+        </div>
+        </>
     );
 }
