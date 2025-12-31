@@ -29,6 +29,22 @@ export const GET_AUTHORS = gql`
     authors {
       id
       name
+      age
     }
   }
+`;
+
+export const GET_AUTHOR = gql`
+  query GetAuthor($id: ID!) {
+      author(id: $id) {
+        id
+        name
+        age
+        movies {
+          id
+          title
+          year
+        }
+      }
+    }
 `;

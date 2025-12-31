@@ -1,26 +1,19 @@
-import MovieList from "./components/MovieList";
-import MovieDetails from "./components/MovieDetails";
-import AddMoviePopup from "./components/AddMoviePopup";
-import { useQuery, useLazyQuery } from "@apollo/client";
-import { GET_MOVIE, GET_MOVIES } from './graphql/queries';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Movies from './pages/Movies';
+import Authors from './pages/Authors';
 
-function App() {
-  const [getMovie, { data: movieData }] = useLazyQuery(GET_MOVIE);
-  const { loading, error, data } = useQuery(GET_MOVIES);
-  const handleGetMore = (id) => getMovie({ variables: { id } });
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
-
+export default function App() {
   return (
     <div className="app">
-      <div>
-        <AddMoviePopup />
-        <MovieList movies={data.movies} onGetMore={handleGetMore} />
-      </div>
-      <MovieDetails movie={ movieData?.movie } />
+      <Navbar />
+
+      <Routes>
+          <Route path="/" element={<Navigate to="/movies" replace />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/authors" element={<Authors />} />
+      </Routes>
     </div>
   )
 }
-
-export default App;
