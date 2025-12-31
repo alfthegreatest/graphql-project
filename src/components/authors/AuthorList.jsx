@@ -23,7 +23,7 @@ export default function AuthorList({ authors }) {
         });
 
         if (data?.author?.movies?.length > 0) {
-            alert(`Cannot delete author "${authorToDelete.name}". They have ${data.author.movies.length} movie(s).`);
+            alert(`Cannot delete author "${authorToDelete.name}". ${data.author.movies.length} movie(s) linked.`);
             clearAuthorToDelete();
             return;
         }
